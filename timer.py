@@ -7,6 +7,7 @@ class TimedEvent:
         self.start_time = None
         self.stop_time = None
         self.started = False
+        self.ended = False
 
     def start(self):
         self.start_time = time.time()
@@ -14,6 +15,7 @@ class TimedEvent:
 
     def stop(self):
         self.stop_time = time.time()
+        self.ended = True
 
 class Log:
 
@@ -43,6 +45,7 @@ class Log:
 
     def print_summary(self):
         for event_name in self.logDict:
-            self.log_table.add_row((event_name,
-                self.logDict[event_name].stop_time - self.logDict[event_name].start_time))
+            if self.logDict[event_name].stopped:
+                self.log_table.add_row((event_name,
+                    self.logDict[event_name].stop_time - self.logDict[event_name].start_time))
         print self.log_table.get_string(sortby='Time elapsed', reversesort=True)
