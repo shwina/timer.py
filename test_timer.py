@@ -1,7 +1,10 @@
 import time
-import numpy as np
-from numpy.testing import *
 import timer
+from nose.tools import assert_raises
+
+
+def assert_allclose(a, b, rtol=1e-7):
+    assert( abs((a-b)/a) <= rtol)
 
 class TestLogging:
 
