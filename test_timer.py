@@ -9,12 +9,12 @@ class TestLogging:
         self.log = timer.Log()
 
     def test_single_event(self):
-        for sleep_times in [1e-5, 1e-4, 1e-3, 1e-2, 1e-1]:
+        for sleep_time in [1e-3, 1e-2, 1e-1]:
             self.log.create_event('event_1')
             self.log.start('event_1')
-            time.sleep(0.1)
+            time.sleep(sleep_time)
             self.log.stop('event_1')
-            assert_allclose(self.log.logDict['event_1'].stop_time - self.log.logDict['event_1'].start_time, 0.1, rtol=0.01)
+            assert_allclose(self.log.logDict['event_1'].stop_time - self.log.logDict['event_1'].start_time, sleep_time, rtol=0.1)
 
     def test_start_without_create(self):
         assert_raises(UnboundLocalError, self.log.start, 'event_nonexistent')
