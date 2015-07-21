@@ -16,6 +16,12 @@ class TimedEvent:
     def stop(self):
         self.stop_time = time.time()
         self.ended = True
+        
+    def get_elapsed_time(self):
+        if self.ended:
+            return self.stop_time - self.start_time
+        else:
+            raise ValueError('Elapsed time unavailable for event that hasn''t ended')
 
 class Log:
 
@@ -47,5 +53,6 @@ class Log:
         for event_name in self.logDict:
             if self.logDict[event_name].stopped:
                 self.log_table.add_row((event_name,
-                    self.logDict[event_name].stop_time - self.logDict[event_name].start_time))
+                    self.logDict[event_name].get_elapsed_time()))
+                    
         print self.log_table.get_string(sortby='Time elapsed', reversesort=True)
